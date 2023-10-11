@@ -1,8 +1,14 @@
+
+import config from "./config/config.js"; //importing the config file
+const contents = document.getElementById("contents");
+
 console.log( "spotify songs");
 
-const clientId = "6b6abbf6057946979e4d2464e2d755cc" //'YOUR_SPOTIFY_CLIENT_ID';
-const clientSecret = "5885a0b91ec44da39acb8788d04c1b21" //'YOUR_SPOTIFY_CLIENT_SECRET';
-const accessToken = "BQAL3xgxnLqxPRpVvQZraLJkVYGJ6ZxhDYQ9cv-gAorpkXecf9cypMfSSiZS6rb9LABZs7aowlVMgKQxhNQTrOVGrAKrq9Mfzb3NOqOie8I_VDu_gzQ"; // Obtain this through Spotify authentication
+const clientId = config.clientId //'YOUR_SPOTIFY_CLIENT_ID';
+const clientSecret = config.clientSecret //'YOUR_SPOTIFY_CLIENT_SECRET';
+const accessToken = config.accessToken // Obtain this through Spotify authentication
+
+//the artists link
 const artistLink = "5xLSa7l4IV1gsQfhAMvl0U?si=3BSmQHBSRuSsIJHCs8v7zw"
 
 // Base64 encode the client ID and client secret
@@ -26,6 +32,17 @@ fetch(apiUrl, fetchOptions)
   .then(response => response.json())
   .then(data => {
     console.log('Data from Spotify API:', data);
+    displayData(data);
     // Handle the data as needed
   })
   .catch(error => console.error('Error:', error));
+
+
+function displayData(data) {
+    contents.innerHTML = "";
+
+    data.forEach(item => {
+      const listItem = document.createElement('div');
+      listItem.textContent = item.name;
+      contents.appendChild(listItem);
+    }); }
